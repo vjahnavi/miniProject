@@ -1,3 +1,15 @@
+/**************************************************************************************************************************************************************************************
+
+****   Author: Jahnavi Vennapusa                                                                                                                                                   ****
+
+****   File: temperatureMonitor.h                                                                                                                                                  *** 
+
+****   Date: 7 February 2019                                                                                                                                                      ****
+ 
+**********************************    END    *****************************************************************************************************************************************/
+
+
+
 #ifndef temperatureMonitor_HPP
 #define temperatureMonitor_HPP
 
@@ -8,17 +20,14 @@
 //#include"mainController.h"
 class cTemperatureMonitor : public observer
 {
-	public:
-	std::vector <std::pair<char,float> > tempMonitor;
-	float value;
-	char unit;
-
-	public:
-	//staic void* convertToDegree(char,float);
-	static void convert();
-	virtual void update(char,float) override;
-	static void *create(void *);
-//	virtual void writeTempData(char,float) ;
+    public:
+    std::vector <std::pair<char,float> > mtempMonitor;
+    float mvalue;
+    char munit;
+    public:
+    static void convert();
+    virtual void update(char,float) override;
+    static void *create(void *);
 };
 #endif
 

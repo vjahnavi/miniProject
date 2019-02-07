@@ -1,3 +1,13 @@
+/**************************************************************************************************************************************************************************************
+
+****   Author: Jahnavi Vennapusa                                                                                                                                                   ****
+
+****   File: temperatureSensor.cpp                                                                                                                                                ****  
+****   Date: 7 February 2019                                                                                                                                                       ****
+ 
+**********************************    END    *****************************************************************************************************************************************/
+
+
 #include"temperatureSensor.h"
 #include<cstring>
 #include<iostream>
@@ -7,21 +17,19 @@
 /********** function for making subscribers to get subscribed **********/
 
 void ctemperatureSensor::subscribe(observer *myobserver)
-
 {
-    	cout << "subscribed" << endl;
-	myobs.push_back( myobserver);
-    
+    cout << "subscribed" << endl;
+    mMyobs.push_back( myobserver);
 }
 
 /********* function for maiking subscribers to get unsybscribed *******/
 
 void ctemperatureSensor::unsubscribe( observer *myobserver)
 {
-    	cout << "removing subscriber" << endl;
-	auto iterator =find(myobs.begin(),myobs.end(),myobserver);
-	    if(iterator!=myobs.end())
-		   myobs.erase(iterator);
+    cout << "removing subscriber" << endl;
+    auto iterator =find(mMyobs.begin(),mMyobs.end(),myobserver);
+    if(iterator!=mMyobs.end()) 
+    mMyobs.erase(iterator);
   
 }
 
@@ -30,47 +38,45 @@ void ctemperatureSensor::unsubscribe( observer *myobserver)
  void ctemperatureSensor::getTemperature()
 {
 
-	std::ifstream inFile{"file.txt"};
-	while (inFile)
+    std::ifstream inFile{"file.txt"};
+    if(inFile.fail())
+    {
+	    cout << "file is not present" << endl;
+    }
+    while (inFile)
+    {
+        string keyBefore,valueBefore;
 	{
-		string keyBefore,valueBefore;
-		{
-			getline(inFile,valueBefore, ':') && getline(inFile, keyBefore);
-			if(inFile)
-			{
-				value=stof(valueBefore);  //converting string to float 
-
-				char duplicateStr[keyBefore.size() + 1];
-				strcpy(duplicateStr, &keyBefore[0]);
-				key=duplicateStr[0];      // converting string to char
-				project.push_back(make_pair(key,value));
-		
-				
-	
-			}
-
-		}
+	    getline(inFile,valueBefore, ':') && getline(inFile, keyBefore);
+	    if(inFile)
+	    {
+	        mvalue=stof(valueBefore);  //converting string to float 
+                char duplicateStr[keyBefore.size() + 1];
+		strcpy(duplicateStr, &keyBefore[0]);
+		mkey=duplicateStr[0];      // converting string to char
+		mproject.push_back(make_pair(mkey,mvalue));
+	     }
 	}
+    }
 }
 
 /********* function to display the data stored in a vector ************/
 
 void ctemperatureSensor::displayData()
 {	
-vector<pair<char,float>>:: const_iterator itr;
-	
-	for (itr = project.begin(); itr != project.end(); itr++)
-	{
-		cout << itr->first << "\t" << itr->second << endl;
+    vector<pair<char,float>>:: const_iterator itr;
+    for (itr = mproject.begin(); itr != mproject.end(); itr++)
+    {	
+	    cout << itr->first << "\t" << itr->second << endl;
 
 	
-	}
-	for(itr=project.begin();itr!=project.end();itr++)
-	{
-		key=itr->first;
-		value=itr->second;
+    }
+    for(itr=mproject.begin();itr!=mproject.end();itr++)
+    {
+		mkey=itr->first;
+		mvalue=itr->second;
 		notify();
-	}
+    }
 }	
 
 	
@@ -78,10 +84,11 @@ vector<pair<char,float>>:: const_iterator itr;
 
 void ctemperatureSensor::notify()
 {
-	cout << "notifying" << endl;
-	for (observer *myobserver : myobs) { // notify all observers
-        myobserver->update(key,value);
-        }
+    cout << "notifying" << endl;
+    for(observer *myobserver : mMyobs) // notify all observers
+    { 
+        myobserver->update(mkey,mvalue);
+    }
 }
 
 

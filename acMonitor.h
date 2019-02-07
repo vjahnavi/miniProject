@@ -1,3 +1,14 @@
+/**************************************************************************************************************************************************************************************
+
+****   Author: Jahnavi Vennapusa                                                                                                                                                   ****
+
+****   File: acMonitor.h                                                                                                                                                           ****
+
+****   Date: 7 February 2019                                                                                                                                                       ****
+ 
+**********************************    END    *****************************************************************************************************************************************/
+
+
 #ifndef ACMONITOR_HPP
 #define ACMONITOR_HPP
 
@@ -6,16 +17,15 @@
 #include<vector>
 class cAcMonitor : public observer
 {
-	std::string status;
-	std::vector<std::string> acMonitor;
-	std:: vector< std:: string > ::iterator ac;
-	
-	char unit;
-	float value;
-	public:
-	virtual void update(char,float) override;
-	void convert();
-        static void *create(void *);
+    std::string mstatus;
+    std::vector<std::string> acMonitor;
+    std:: vector< std:: string > ::iterator ac;
+    char munit;
+    float mvalue;
+    public:
+    virtual void update(char,float) override;
+    void convert();
+    static void *create(void *);
 };
 
 

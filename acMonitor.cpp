@@ -1,3 +1,16 @@
+/**************************************************************************************************************************************************************************************
+
+****   Author: Jahnavi Vennapusa                                                                                                                                                   ****
+
+****   File: acMonitor.cpp                                                                                                                                                         ****
+	
+****   Date: 7 February 2019                                                                                                                                                       ****
+ 
+**********************************    END    *****************************************************************************************************************************************/
+
+
+
+
 #ifndef ACMONITOR_CPP
 #define ACMONITOR_CPP
 #include"acMonitor.h"
@@ -8,14 +21,13 @@ using namespace std;
 
 /************** value gets updated everytime a subscriber is attached and thread is being called ***************/
 
-
 void cAcMonitor :: update(char a,float b)
 {
-	unit=a;
-	value=b;
-	pthread_t t1;
-	pthread_create(&t1,NULL,create,(void *)(this));
-	pthread_join(t1,NULL);
+    munit=a;
+    mvalue=b;
+    pthread_t t1;
+    pthread_create(&t1,NULL,create,(void *)(this));
+    pthread_join(t1,NULL);
 }
 
 
@@ -24,9 +36,9 @@ void cAcMonitor :: update(char a,float b)
 
 void* cAcMonitor::create(void *ptr)
 {
-        cAcMonitor *ptr1=static_cast <cAcMonitor *>(ptr);
-        ptr1->convert();
-        return 0;
+    cAcMonitor *ptr1=static_cast <cAcMonitor *>(ptr);
+    ptr1->convert();
+    return 0;
 }
 
 	
@@ -34,40 +46,30 @@ void* cAcMonitor::create(void *ptr)
 /*********** function which checks the status of ac *******/
 	
 	
-	
-	
-	
 void cAcMonitor :: convert()
 {
-	cout << "............................." << endl;
-	cout << "updating in AC monitor" << endl;
-	if(value > 40)
-	{
-		status="hot";
-		cout << "hot " << endl;
-		MainController::displayAC(status);
-	}
-	else if(value > 30 && value <= 40)
-	{
-	
-		status="medium";
-		cout << "medium" << endl;
-		MainController::displayAC(status);
-	}
-	else if(value > 0 && value <=30)
-	{
-		
-		status="cold";
-		cout << "cold " << endl;
-		MainController::displayAC(status);
+    cout << "............................." << endl;
+    cout << "updating in AC monitor" << endl;
+    if(mvalue > 40)
+    {
+        mstatus="hot";
+	cout << "hot " << endl;
+	MainController::displayAC(mstatus);
+    }
+    else if(mvalue > 30 && mvalue <= 40)
+    {
+        mstatus="medium";
+	cout << "medium" << endl;
+	MainController::displayAC(mstatus);
+    }
+    else if(mvalue > 0 && mvalue <=30)
+    {
+	mstatus="cold";
+	cout << "cold " << endl;
+	MainController::displayAC(mstatus);
 
-	}
-	acMonitor.push_back(status);
-
-/*	for(ac=acMonitor.begin();ac!=acMonitor.end();++ac)
-	{
-		cout << *ac << endl;
-	}*/
+    }
+    acMonitor.push_back(mstatus);
 
 }
 #endif
