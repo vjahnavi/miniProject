@@ -6,12 +6,3 @@ Degree : C	Temperature : 4.50556
 AC Level : hot
 Degree : F	Temperature : 0.624937
 AC Level : cold
-
-Degree : C	Temperature : -6.54445
-AC Level : cold
-Degree : F	Temperature : 1.69425
-AC Level : medium
-Degree : C	Temperature : 4.50556
-AC Level : hot
-Degree : F	Temperature : 0.624937
-AC Level : cold
